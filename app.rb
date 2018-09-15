@@ -1,8 +1,16 @@
+
+#https://hidden-hamlet-22447.herokuapp.com/
+
 require 'sinatra'
 require "sinatra/reloader" if development?
+require 'twilio-ruby'
 
 enable :sessions
 
+configure :development do
+  require 'dotenv'
+  Dotenv.load
+end
 
 $greeting_array = ["Hello", "Hi", "What's up", "Hi there"]
 $secretcode = "hahaha"
