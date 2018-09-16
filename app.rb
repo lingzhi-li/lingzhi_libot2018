@@ -5,14 +5,13 @@ require 'sinatra'
 require "sinatra/reloader" if development?
 require 'twilio-ruby'
 
-
 configure :development do
   require 'dotenv'
   Dotenv.load
 end
 
-enable :sessions
 
+enable :sessions
 
 $greeting_array = ["Hello", "Hi", "What's up", "Hi there"]
 $secretcode = "hahaha"
@@ -42,7 +41,30 @@ end
 
 
 get '/incoming/sms' do
-  403
+     session["counter"]||=1
+     body=params[:body]
+
+     if session["counter"]==1
+       message = "Thanks for your first message!"
+       media = "https://media.giphy.com/media/l1KcPVZa7M6eGbxHa/giphy.gif"
+     else
+       message = "Thanks for your message again!"
+       media = "https://media.giphy.com/media/3ohs4kI2X9r7O8ZtoA/giphy.gif"
+     end
+
+     twiml = Twilio::TwiML::MessagingResponse.new do |r|
+       r.message do |m|
+          m.body( message )
+          unless media.nil? #unless == if not
+            m.media( media )
+          end
+        end
+      end
+
+      session["counter"] += 1
+      content_type 'text/xml'
+  twiml.to_s
+
 end
 
 get '/test/conversation/:body/:from' do
@@ -99,7 +121,6 @@ error 403 do
 end
 
 
-
 #=begin -Week2-Practice 7
 get '/signup/:first_name/:number/:sec_code' do # note: keep variables name consistent with erb
 
@@ -112,11 +133,21 @@ get '/signup/:first_name/:number/:sec_code' do # note: keep variables name consi
 end
 
 post '/signup' do
+  client = Twilio::REST::Client.new ENV["TWILIO_ACCOUNT_SID"], ENV["TWILIO_AUTH_TOKEN"]
+  message = "Hi" + params[:first_name] + ", welcome to Lingzhi's Bot! I can respond to who, what, where, when and why. If you're stuck, type help."
 
  if params[:first_name].nil? && params[:number].nil?
   "Please input your name and phone number"
-else
-  "Sign up successfully! You will receive a text message in a few minutes from a bot "
+ else
+  #this will send a message from any end point
+  client.api.account.messages.create(
+    from: ENV["TWILIO_FROM"],
+    to: params[:number],
+    body: message
+  )
+
+  "Sign up successfully! You will receive a text message in a few minutes from a bot!"
+
  end
 
 end
