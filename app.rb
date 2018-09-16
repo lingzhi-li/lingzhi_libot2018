@@ -46,10 +46,10 @@ get '/incoming/sms' do
 
      if session["counter"]==1
        message = "Thanks for your first message!"
-       media = "https://media.giphy.com/media/l1KcPVZa7M6eGbxHa/giphy.gif"
+       #media = "https://media.giphy.com/media/l1KcPVZa7M6eGbxHa/giphy.gif"
      else
        message = "Thanks for your message again!"
-       media = "https://media.giphy.com/media/3ohs4kI2X9r7O8ZtoA/giphy.gif"
+       #media = "https://media.giphy.com/media/3ohs4kI2X9r7O8ZtoA/giphy.gif"
      end
 
      twiml = Twilio::TwiML::MessagingResponse.new do |r|
