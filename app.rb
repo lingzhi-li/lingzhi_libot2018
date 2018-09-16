@@ -32,7 +32,7 @@ get '/about' do
 
   if session[:first_name].nil?
      myTime = Time.now
-     random_greeting + " My app does mockinterview for you.You have visited " + session["visit"].to_s + " times as of "+ myTime.to_s
+     random_greeting + "haha My app does mockinterview for you.You have visited " + session["visit"].to_s + " times as of "+ myTime.to_s
 
 	else
 		"Welcome back" + session[:first_name]
