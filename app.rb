@@ -55,9 +55,9 @@ get '/incoming/sms' do
      twiml = Twilio::TwiML::MessagingResponse.new do |r|
        r.message do |m|
           m.body( message )
-          unless media.nil? #unless == if not
-            m.media( media )
-          end
+          #unless media.nil? #unless == if not
+            #m.media( media )
+          #end
         end
       end
 
