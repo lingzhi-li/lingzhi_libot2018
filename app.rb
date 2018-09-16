@@ -3,16 +3,16 @@
 
 require 'sinatra'
 require "sinatra/reloader" if development?
-#require 'twilio-ruby'
+require 'twilio-ruby'
 
-enable :sessions
 
-=begin
 configure :development do
   require 'dotenv'
   Dotenv.load
 end
-=end
+
+enable :sessions
+
 
 $greeting_array = ["Hello", "Hi", "What's up", "Hi there"]
 $secretcode = "hahaha"
