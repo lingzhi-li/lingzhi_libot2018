@@ -1,6 +1,3 @@
-
-#https://hidden-hamlet-22447.herokuapp.com/
-
 require 'sinatra'
 require "sinatra/reloader" if development?
 require 'twilio-ruby'
@@ -46,11 +43,13 @@ get '/incoming/sms' do
 
      if session["counter"]==1
        message = "Thanks for your first message!"
-       #media = "https://media.giphy.com/media/l1KcPVZa7M6eGbxHa/giphy.gif"
+       #media = "https://media.giphy.com/media/l1KcPVZa7M6eGbxHa/giphy.gif" #require gem media, gem giphy
      else
        message = "Thanks for your message again!"
        #media = "https://media.giphy.com/media/3ohs4kI2X9r7O8ZtoA/giphy.gif"
      end
+
+     session["counter"] += 1
 
      twiml = Twilio::TwiML::MessagingResponse.new do |r|
        r.message do |m|
@@ -61,10 +60,10 @@ get '/incoming/sms' do
         end
       end
 
-      session["counter"] += 1
-      content_type 'text/xml'
-  twiml.to_s
 
+      #content_type 'text/xml'
+      #twiml.to_s
+      "debug test!" #for debug purpose
 end
 
 get '/test/conversation/:body/:from' do
