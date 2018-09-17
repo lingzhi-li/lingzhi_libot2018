@@ -45,7 +45,7 @@ get '/incoming/sms' do
        message = "Thanks for your first message!"
        #media = "https://media.giphy.com/media/l1KcPVZa7M6eGbxHa/giphy.gif" #require gem media, gem giphy
      else
-       message = "Thanks for your message again!"
+       message = determin_response params[:body]
        #media = "https://media.giphy.com/media/3ohs4kI2X9r7O8ZtoA/giphy.gif"
      end
 
@@ -53,7 +53,7 @@ get '/incoming/sms' do
 
      twiml = Twilio::TwiML::MessagingResponse.new do |r|
        r.message do |m|
-          m.body( message )
+          m.body( determin_response params[:body] )
           #unless media.nil? #unless == if not
             #m.media( media )
           #end
