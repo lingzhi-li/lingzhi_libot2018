@@ -60,8 +60,7 @@ get '/incoming/sms' do
           #end
         end
       end
-
-
+      
       content_type 'text/xml'
       twiml.to_s
       #"debug test!" #for debug purpose
