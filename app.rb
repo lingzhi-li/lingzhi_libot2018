@@ -53,7 +53,7 @@ get '/incoming/sms' do
 
      twiml = Twilio::TwiML::MessagingResponse.new do |r|
        r.message do |m|
-          m.body( determin_response params[:body] )
+          m.body( message )
           #unless media.nil? #unless == if not
             #m.media( media )
           #end
