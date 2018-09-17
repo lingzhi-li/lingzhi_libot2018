@@ -44,9 +44,10 @@ get '/incoming/sms' do
      if session["counter"]<=1
        message = "Thanks for your first message!"
        #media = "https://media.giphy.com/media/l1KcPVZa7M6eGbxHa/giphy.gif" #require gem media, gem giphy
-     else
-       message = "Thanks for your " + session["counter"].to_s+ " times message"
+     elsif body == "what"
+       #message = "Thanks for your " + session["counter"].to_s+ " times message"
        #message = determin_response params[:body]
+       message="I can do mock interview for you"
        #media = "https://media.giphy.com/media/3ohs4kI2X9r7O8ZtoA/giphy.gif"
      end
 
@@ -60,7 +61,7 @@ get '/incoming/sms' do
           #end
         end
       end
-      
+
       content_type 'text/xml'
       twiml.to_s
       #"debug test!" #for debug purpose
@@ -80,15 +81,15 @@ def determin_response body
 body = body.downcase.strip
 
 if str_check body,"hi"
-  "Hi, what's going on"
+   "Hi, what's going on"
 elsif str_check body,"who"
-    "I am Li. I am a bot"
+   "I am Li. I am a bot"
 elsif str_check body,"what"
-    "I can do mockinterview with you"
+   "I can do mockinterview with you"
 elsif str_check body,"where"
-    "I am in Pittsburgh"
+   "I am in Pittsburgh"
 elsif str_check body,"when"
-    "I was made in Fall 2018."
+  "I was made in Fall 2018."
 elsif str_check body,"why"
   " I was made for a class project in this class."
 elsif str_check body,"joke"
@@ -106,13 +107,14 @@ end
 end
 
 def str_check string, keyword
+
   string = string.downcase.strip
   if string.include? keyword #no quotation mark
     return true
   else
     return false
-
   end
+
 end
 
 error 403 do
