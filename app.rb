@@ -41,11 +41,11 @@ get '/incoming/sms' do
      session["counter"]||=1
      body=params[:body]
 
-     if session["counter"]==1
+     if session["counter"]<=1
        message = "Thanks for your first message!"
        #media = "https://media.giphy.com/media/l1KcPVZa7M6eGbxHa/giphy.gif" #require gem media, gem giphy
-     elsif body.include? "what"
-       message = "I can do mockinterview with you"
+     else
+       message = "Thanks for your " + session["counter"].to_s+ " times message"
        #message = determin_response params[:body]
        #media = "https://media.giphy.com/media/3ohs4kI2X9r7O8ZtoA/giphy.gif"
      end
