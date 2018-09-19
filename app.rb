@@ -39,21 +39,23 @@ end
 
 get '/incoming/sms' do
      session["counter"]||=1
-     session["counter"] += 1
-     body=params[:body]
+     mebody=params[:Body]
 
-     if session["counter"]<=1
-       message = "Thanks for your first message!"
+
+     #message = "testttt!"
+      if session["counter"]<=1
+        message = "Thanks for your first message!"
        #media = "https://media.giphy.com/media/l1KcPVZa7M6eGbxHa/giphy.gif" #require gem media, gem giphy
-     else
-       # message = "Thanks for your " + session["counter"].to_s+ " times message"
-       message = determin_response body
-       #message ="I can do mock interview for you"
-       #media = "https://media.giphy.com/media/3ohs4kI2X9r7O8ZtoA/giphy.gif"
+      else
+        #message = "Thanks for your " + session["counter"].to_s+ " times message"
+        message = determin_response mebody
+        #message ="I can do mock interview for you"
+        #media = "https://media.giphy.com/media/3ohs4kI2X9r7O8ZtoA/giphy.gif"
 
-     end
+      end
 
-     #
+      session["counter"] += 1
+
      twiml = Twilio::TwiML::MessagingResponse.new do |r|
        r.message do |m|
           m.body( message )
